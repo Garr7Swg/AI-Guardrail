@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#080b12" />
+    <meta name="description" content="AI content screening and dual-model arbitration workspace" />
+    <title>Sentinel // AI Guardrail</title>
+    <link rel="stylesheet" href="/static/app.css" />
+  </head>
+  <body>
+    <div class="boot-screen" id="bootScreen" role="status" aria-live="polite">
+      <div class="boot-card">
+        <div class="boot-brand"><span class="boot-mark">S</span><span>SENTINEL <b>//</b> SYSTEM START</span></div>
+        <div class="boot-orbit" aria-hidden="true"><span class="boot-orbit-core">S</span><i></i><i></i></div>
+        <p class="eyebrow">INITIALIZING CONTENT GATEWAY</p>
+        <h1>Waking up<br /><em>the guardrails.</em></h1>
+        <p class="boot-copy">This app may take a tad longer to load or answer because it uses free-tier APIs and local or hosted model hardware.</p>
+        <div class="boot-progress" aria-hidden="true"><span></span></div>
+        <p class="boot-status"><span class="pulse-dot"></span> PREPARING SECURE SESSION</p>
+      </div>
+    </div>
+    <div class="ambient ambient-a" aria-hidden="true"></div>
+    <div class="ambient ambient-b" aria-hidden="true"></div>
+
+    <section class="auth-screen" id="authScreen" aria-label="Sign in">
+      <div class="auth-card">
+        <div class="brand-mark large-mark"><span class="mark-core">S</span><i></i></div>
+        <p class="eyebrow">SECURE CONTENT GATEWAY</p>
+        <h1>Think clearly.<br /><span>Ship safely.</span></h1>
+        <p class="auth-copy">Sign in to run guarded AI sessions and manage private documents.</p>
+        <div class="auth-tabs" role="tablist" aria-label="Account access">
+          <button class="auth-tab active" id="loginTab" type="button" role="tab" aria-selected="true">Sign in</button>
+          <button class="auth-tab" id="registerTab" type="button" role="tab" aria-selected="false">Create account</button>
+        </div>
+        <form id="authForm" class="auth-form">
+          <label class="field-label" for="emailInput">Email</label>
+          <input id="emailInput" name="email" type="email" autocomplete="email" maxlength="320" placeholder="you@company.com" required />
+          <div id="nameField" class="name-field" hidden>
+            <label class="field-label" for="nameInput">Display name</label>
+            <input id="nameInput" name="display_name" type="text" autocomplete="name" maxlength="60" placeholder="Your name" />
+          </div>
+          <label class="field-label password-label" for="passwordInput">Password</label>
+          <input id="passwordInput" name="password" type="password" autocomplete="current-password" minlength="12" maxlength="128" placeholder="At least 12 characters" required />
+          <p class="form-error" id="authError" role="alert"></p>
+          <button class="button button-primary auth-submit" id="authSubmit" type="submit">Sign in <span>↗</span></button>
+        </form>
+        <p class="auth-footnote">Passwords are protected with Argon2id. Sessions expire after 12 hours.</p>
+      </div>
+      <div class="auth-side-note"><span class="pulse-dot"></span> PROMPTS SCREENED BEFORE GENERATION</div>
+    </section>
+
+    <div class="app-shell" id="appShell" hidden>
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Sentinel home">
+          <span class="brand-mark"><span class="mark-core">S</span><i></i></span>
+          <span class="brand-name">SENTINEL<span class="brand-slash">//</span><small>CONTENT ARBITRATION</small></span>
+        </a>
+        <div class="topbar-center"><span class="pulse-dot"></span> GUARDRAIL ACTIVE <span class="topbar-divider">/</span> REAL-TIME SCREENING</div>
+        <div class="profile-area">
+          <input id="avatarInput" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden />
+          <button class="avatar-button" id="avatarButton" type="button" title="Click to upload a profile picture" aria-label="Upload profile picture">
+            <span class="avatar-initials" id="avatarInitials">?</span>
+            <img id="avatarImage" alt="Profile picture" hidden />
+            <span class="avatar-edit">+</span>
+          </button>
+          <div class="profile-meta"><strong id="profileName">Operator</strong><span id="profileEmail">SIGNED IN</span></div>
+          <button class="icon-button signout-button" id="signOutButton" type="button" title="Sign out" aria-label="Sign out">⤴</button>
+        </div>
+      </header>
+
+      <div class="workspace">
+        <aside class="sidebar">
+          <div class="sidebar-heading"><span>WORKSPACE</span><span class="tiny-tag">PRIVATE</span></div>
+          <button class="new-chat-button" id="newChatButton" type="button"><span>＋</span> New session</button>
+          <div class="sidebar-rule"></div>
+          <div class="section-heading"><span>DOCUMENT VAULT</span><span class="vault-count" id="vaultCount">0</span></div>
+          <p class="section-hint">Private files · up to 25 MB each</p>
+          <input id="documentInput" type="file" multiple hidden />
+          <button class="upload-button" id="uploadButton" type="button"><span class="upload-symbol">↑</span><span><strong>Upload documents</strong><small>Any format · stored as-is</small></span></button>
+          <div class="file-list" id="fileList" aria-live="polite">
+            <p class="empty-files">Your vault is empty.</p>
+          </div>
+          <div class="sidebar-bottom">
+            <div class="storage-card"><span class="storage-icon">◈</span><div><strong>Private by default</strong><small>Only your account can access these files.</small></div></div>
+            <div class="sidebar-links"><a href="/docs" target="_blank" rel="noreferrer">API reference <span>↗</span></a></div>
+          </div>
+        </aside>
+
+        <main class="main-panel">
+          <div class="session-bar"><div><span class="session-dot"></span> SESSION <strong id="sessionCode">READY</strong></div><div class="model-pipeline"><span>GENERATE</span><i></i><span>REVIEW</span><i></i><span>RELEASE</span></div></div>
+          <section class="conversation" id="conversation" aria-live="polite">
+            <div class="welcome-state" id="welcomeState">
+              <div class="welcome-orbit"><div class="orbit-ring ring-one"></div><div class="orbit-ring ring-two"></div><span class="orbit-core">S</span><span class="orbit-cross cross-a">+</span><span class="orbit-cross cross-b">+</span></div>
+              <p class="eyebrow">ARBITRATION ENGINE <span>01</span></p>
+              <h2>Make every answer<br />pass the <em>checkpoint.</em></h2>
+              <p class="welcome-copy">Send a prompt. The system screens it for injection and brand risks, then checks the generated answer before it reaches you.</p>
+              <div class="welcome-chips"><span>01 / PROMPT SCREEN</span><span>02 / DUAL-MODEL REVIEW</span><span>03 / SAFE RELEASE</span></div>
+            </div>
+            <div class="messages" id="messages"></div>
+          </section>
+          <div class="composer-wrap">
+            <form id="chatForm" class="composer">
+              <div class="composer-top"><span class="composer-label"><span class="composer-spark">✳</span> GUARDED PROMPT</span><span class="composer-shortcut">ENTER TO SEND · SHIFT + ENTER FOR NEW LINE</span></div>
+          <textarea id="promptInput" rows="1" maxlength="6000" placeholder="Ask a question or describe what you need…" aria-label="Prompt" required></textarea>
+              <div class="composer-bottom"><span class="composer-note">Untrusted instructions and blocked brand terms are stopped before generation.</span><button class="send-button" id="sendButton" type="submit" aria-label="Send prompt"><span>Send</span><b>↗</b></button></div>
+            </form>
+            <p class="coldstart-note">Free-tier model services may take a little time to wake up. <a href="/docs" target="_blank" rel="noreferrer">Explore the API ↗</a></p>
+          </div>
+        </main>
+      </div>
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    </div>
+    <script src="/static/app.js" defer></script>
+  </body>
+</html>

@@ -1,4 +1,0 @@
-FROM qwen2.5:3b-instruct-q4_K_M
-PARAMETER num_ctx 4096
-PARAMETER num_predict 768
-PARAMETER temperature 0.2
